@@ -83,13 +83,13 @@ def get_trc20token_info_from_tronscan(tronscan_url,excel_path):
             address = usdt_info_form_tronscan_content['trc20_tokens'][i]['holder_address'] # 获取holders address
             balance_from_tronscan = usdt_info_form_tronscan_content['trc20_tokens'][i]['balance'] # 获取holders tronscan上返回的余额
             balance_from_trongrid_V1_API = get_trc20token_balanceOf_from_trongridV1(address) # 获取holders trongrid上返回的余额
-            balence_from_trigger = get_balance_from_trig(address,contract_address) # 通过trigger获取链上的余额
+            balance_from_trigger = get_balance_from_trig(address,contract_address) # 通过trigger获取链上的余额
             time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") # 获取当前时间
             print("balance_from_tronscan:" + str(balance_from_tronscan))
             print("balance_from_trongrid_V1_api:" + str(balance_from_trongrid_V1_API))
-            print("balence_from_trigger:" + str(balence_from_trigger))
-            if balance_from_tronscan != balance_from_trongrid_V1_API: # 判断余额是否相等，如果不相等，写入excel表
-                value = [[address,balance_from_tronscan,balance_from_trongrid_V1_API,balence_from_trigger,time],]
+            print("balance_from_trigger:" + str(balance_from_trigger))
+            if balance_from_tronscan != balance_from_trongrid_V1_API != balance_from_trigger: # 判断余额是否相等，如果不相等，写入excel表
+                value = [[address,balance_from_tronscan,balance_from_trongrid_V1_API,balance_from_trigger,time],]
                 write_diff_trc20token_info_to_excel(excel_path,value)
     else:
         print("====status_code error,will wait 60s tra again.")
